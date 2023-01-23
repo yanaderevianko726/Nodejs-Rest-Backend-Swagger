@@ -1,30 +1,22 @@
 {
-  "name": "express-backend",
+  "name": "nodejs-express-mysql",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js Restful CRUD API with Node.js, Express and MySQL",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon server.js --exec babel-node --presets babel-preset-env",
-    "lint": "eslint src/js"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "keywords": [
+    "nodejs",
+    "express",
+    "mysql",
+    "restapi"
+  ],
+  "author": "bezkoder",
   "license": "ISC",
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "cors": "^2.8.3",
-    "express": "^4.17.1",
-    "express-validator": "^6.14.3",
-    "jsonwebtoken": "^9.0.0",
-    "md5": "^2.2.1",
-    "mysql": "^2.18.1",
-    "nodemon": "^2.0.4",
-    "swagger-ui-express": "^4.6.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.3",
-    "babel-loader": "^8.1.0",
-    "babel-preset-env": "^1.7.0"
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mysql": "^2.18.1"
   }
 }

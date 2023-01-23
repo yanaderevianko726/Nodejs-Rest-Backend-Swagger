@@ -1,25 +1,28 @@
 const express = require("express");
-const bodyParser = require('body-parser');
-const cors = require('cors');
+const cors = require("cors");
 
-const db = require('./config/db');
-const router = require('./config/router');
 const app = express();
-const port = 8000;
+const PORT = process.env.PORT || 8080;
 
-const swaggerUi = require('swagger-ui-express'),
-swaggerDocument = require('./swagger.json');
+var corsOptions = {
+  origin: "http://localhost:8000"
+};
 
-db.sync();
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json())
-app.use(cors());
+app.use(cors(corsOptions));
 
-app.use(
-  '/api-docs',
-  swaggerUi.serve, 
-  swaggerUi.setup(swaggerDocument)
-);
+// parse requests of content-type - application/json
+app.use(express.json());
 
-router(app);
-app.listen(port, () => console.log('Run on port ${port}'));
+// parse requests of content-type - application/x-www-form-urlencoded
+app.use(express.urlencoded({ extended: true })); 
+
+// simple route
+app.get("/", (req, res) => {
+  res.json({ message: "Welcome to our application." });
+});
+
+require("./app/routes/user.routes.js")(app);
+
+app.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}.`);
+});
