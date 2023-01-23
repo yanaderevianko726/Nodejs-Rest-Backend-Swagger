@@ -74,7 +74,7 @@ User.findById = (userId, result) => {
       return;
     }
 
-    // not found User with the id
+    // not found User with the userId
     result({ kind: "not_found" }, null);
   });
 };
@@ -93,7 +93,7 @@ User.findByPmKeyAndSurname = (pmKey, surname, result) => {
       return;
     }
 
-    // not found User with the id
+    // not found User with the surname
     result({ kind: "not_found" }, null);
   });
 };

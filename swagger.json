@@ -218,6 +218,7 @@
   "definitions": {
     "User": {
       "required": [
+        "userId",
         "surname",
         "pmKey"
       ],
@@ -250,37 +251,6 @@
         "token": {
           "type": "string"              
         }
-      }
-    },
-    "updateUser": {
-      "required": [
-        "userId"
-      ],
-      "properties": {
-        "surname": {
-          "type": "string"
-        },
-        "lastname": {
-          "type": "string"              
-        },
-        "phone_number": {
-          "type": "string"              
-        } ,
-        "email": {
-          "type": "string"              
-        },
-        "rank_num": {
-          "type": "string"              
-        },
-        "pmkey": {
-          "type": "string"              
-        },
-        "title": {
-          "type": "string"              
-        }    ,
-        "token": {
-          "type": "string"              
-        }  
       }
     },
     "Users": {
