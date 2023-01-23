@@ -37,6 +37,35 @@
           }
         }
     },
+    "/api/users/confirm/{pmKey}/{surname}": {
+      "get": {
+        "parameters": [          
+          {
+            "name": "pmKey",
+            "in": "path",
+            "required": true,
+            "description": "PmKey for user",
+            "type": "string"
+          },
+          {
+            "name": "surname",
+            "in": "path",
+            "required": true,
+            "description": "Surname for user",
+            "type": "string"
+          }
+        ],
+        "description": "Get user with pmKey and surname in system",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      }
+    },
     "/api/users/addUser": {
       "post": {
         "tags": [
@@ -52,8 +81,7 @@
               "properties": {
                 "surname": {
                   "type": "string",
-                  "required": true,
-                  "uniqueItems": true
+                  "required": true
                 },
                 "lastname": {
                   "type": "string"              
@@ -69,7 +97,8 @@
                 },
                 "pmKey": {
                   "type": "string",
-                  "required": true              
+                  "required": true  ,
+                  "uniqueItems": true            
                 },
                 "title": {
                   "type": "string"             

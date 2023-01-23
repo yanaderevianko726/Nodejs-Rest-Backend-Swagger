@@ -42,9 +42,22 @@ exports.findAll = (req, res) => {
 };
 
 // Retrieve all Users from the database (with condition).
-exports.findAllWithTitle = (req, res) => {
-  const title = req.query.title;
-  User.getAllWithTitle(title, (err, data) => {
+exports.findAllWithSurname = (req, res) => {
+  const surname = req.query.surname;
+  User.getAllWithSurname(surname, (err, data) => {
+    if (err)
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving users."
+      });
+    else res.send(data);
+  });
+};
+
+// Retrieve all Users from the database (with condition).
+exports.findByPmKeyAndSurname = (req, res) => {
+  const pmKey = req.params.pmKey;
+  const surname = req.params.surname;
+  User.findByPmKeyAndSurname(pmKey, surname, (err, data) => {
     if (err)
       res.status(500).send({
         message: err.message || "Some error occurred while retrieving users."

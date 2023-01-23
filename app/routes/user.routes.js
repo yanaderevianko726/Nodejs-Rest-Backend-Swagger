@@ -7,13 +7,16 @@ module.exports = app => {
   router.get("/getAll", userController.findAll);
 
   // Retrieve all published User
-  router.get("/title", userController.findAllWithTitle);
+  router.get("/surname", userController.findAllWithSurname);
 
   // Create a new User
   router.post("/addUser", userController.create);
 
   // Retrieve a single User with userId
   router.get("/:userId", userController.findOne);
+
+  // Retrieve all published User
+  router.get("/confirm/:pmKey/:surname", userController.findByPmKeyAndSurname);
 
   // Update a User with userId
   router.put("/:userId", userController.update);

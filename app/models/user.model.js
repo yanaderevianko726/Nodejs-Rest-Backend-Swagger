@@ -42,10 +42,10 @@ User.getAll = result => {
   });
 };
 
-User.getAllWithTitle = (title, result) => {
+User.getAllWithSurname = (surname, result) => {
   let query = "SELECT * FROM " + tb_name;
-  if (title) {
-    query += ` WHERE title LIKE '%${title}%'`;
+  if (surname) {
+    query += " WHERE surname LIKE '%" + surname + "%'";
   }
 
   sql.query(query, (err, res) => {
@@ -61,7 +61,26 @@ User.getAllWithTitle = (title, result) => {
 };
 
 User.findById = (userId, result) => {
-  sql.query("SELECT * FROM " + tb_name + " WHERE userId = ${userId}", (err, res) => {
+  sql.query("SELECT * FROM " + tb_name + " WHERE userId = '" + userId + "'", (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(err, null);
+      return;
+    }
+
+    if (res.length) {
+      console.log("found user: ", res[0]);
+      result(null, res[0]);
+      return;
+    }
+
+    // not found User with the id
+    result({ kind: "not_found" }, null);
+  });
+};
+
+User.findByPmKeyAndSurname = (pmKey, surname, result) => {
+  sql.query("SELECT * FROM " + tb_name + " WHERE pmKey = '" + pmKey + "' AND surname = '" + surname + "'", (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
