@@ -39,6 +39,10 @@
     },
     "/api/users/confirmKey/{pmKey}/{surname}": {
       "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Confirm user with pmkey and surname in system",
         "parameters": [          
           {
             "name": "pmKey",
@@ -55,7 +59,6 @@
             "type": "string"
           }
         ],
-        "description": "Get user with pmKey and surname in system",
         "responses": {
           "200": {
             "description": "OK",
@@ -65,6 +68,72 @@
           }
         }
       }
+    },
+    "/api/users/updateUser/{userId}": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Confirm user in system",
+        "parameters": [
+          {
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "User Id",
+            "type": "integer"
+          },
+          {
+            "name": "Confirm User",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "properties": {
+                "surname": {
+                  "type": "string",
+                  "required": true
+                },
+                "lastname": {
+                  "type": "string",
+                  "required": true              
+                },
+                "phoneNumber": {
+                  "type": "string",
+                  "required": true              
+                },
+                "email": {
+                  "type": "string",
+                  "required": true              
+                },
+                "rankNum": {
+                  "type": "string",
+                  "required": true              
+                },
+                "pmKey": {
+                  "type": "string",
+                  "required": true,
+                  "uniqueItems": true            
+                },
+                "title": {
+                  "type": "string",
+                  "required": true             
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/User"
+            }
+          }
+        }
+      } 
     },
     "/api/users/addUser": {
       "post": {
@@ -120,50 +189,26 @@
         }
       } 
     },
-    "/api/users/{userId}": {
-      "parameters": [
-        {
-          "name": "userId",
-          "in": "path",
-          "required": true,
-          "description": "ID of user that we want to find",
-          "type": "integer"
-        }
-      ],
-      "delete": {
-        "summary": "Delete user with given ID",
+    "/api/users/deleteUser/{userId}": {
+      "get": {
         "tags": [
           "Users"
         ],
-        "responses": {
-          "200": {
-            "description": "User is deleted",
-            "schema": {
-              "$ref": "#/definitions/User"
-            }
-          }
-        }
-      },
-      "put": {
-        "summary": "Update user with give ID",
-        "tags": [
-          "Users"
-        ],
-        "parameters": [
+        "description": "Remove user with userId in system",
+        "parameters": [          
           {
-            "name": "user",
-            "in": "body",
-            "description": "User with new values of properties",
-            "schema": {
-              "$ref": "#/definitions/updateUser"
-            }
+            "name": "userId",
+            "in": "path",
+            "required": true,
+            "description": "PmKey for user",
+            "type": "integer"
           }
         ],
         "responses": {
           "200": {
-            "description": "User is updated",
+            "description": "OK",
             "schema": {
-              "$ref": "#/definitions/User"
+              "message": "Successfully removed user."
             }
           }
         }

@@ -6,23 +6,23 @@ module.exports = app => {
   // Retrieve all Users
   router.get("/getAll", userController.findAll);
 
-  // Retrieve all published User
-  router.get("/surname", userController.findAllWithSurname);
-
-  // Create a new User
-  router.post("/addUser", userController.create);
+  // Retrieve all with surname of User
+  router.get("/getUsers/:surname", userController.findAllWithSurname);
 
   // Retrieve a single User with userId
-  router.get("/:userId", userController.findOne);
+  router.get("/getUser/:userId", userController.findOne);
 
   // Retrieve all published User
   router.get("/confirmKey/:pmKey/:surname", userController.findByPmKeyAndSurname);
 
-  // Update a User with userId
-  router.put("/:userId", userController.update);
+  // Create a new User
+  router.post("/addUser", userController.create);
 
-  // Delete a User with userId
-  router.delete("/:userId", userController.delete);
+  // Confirm a User
+  router.post("/updateUser/:userId", userController.update);
+
+  // Retrieve a single User with userId
+  router.get("/deleteUser/:userId", userController.delete);
 
   app.use('/api/users', router);
 };

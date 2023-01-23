@@ -2,7 +2,6 @@ const User = require("../models/user.model.js");
 
 // Create and Save a new User
 exports.create = (req, res) => {
-  // Validate request
   if (!req.body) {
     res.status(400).send({
       message: "Content can not be empty!"
@@ -18,9 +17,7 @@ exports.create = (req, res) => {
     email: req.body.email,
     rankNum: req.body.rankNum,
     pmKey: req.body.pmKey,
-  });
-
-  // Save User in the database
+  });  
   User.create(user, (err, data) => {
     if (err)
       res.status(500).send({
@@ -43,7 +40,7 @@ exports.findAll = (req, res) => {
 
 // Retrieve all Users from the database (with condition).
 exports.findAllWithSurname = (req, res) => {
-  const surname = req.query.surname;
+  const surname = req.params.surname;
   User.getAllWithSurname(surname, (err, data) => {
     if (err)
       res.status(500).send({
@@ -85,32 +82,34 @@ exports.findOne = (req, res) => {
 
 // Update a User identified by the userId in the request
 exports.update = (req, res) => {
-  // Validate Request
-  if (!req.body) {
+  if (!req.params.userId) {
     res.status(400).send({
       message: "Content can not be empty!"
     });
+  }else if (!req.body) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+  }else{
+    console.log(req.body);
+    User.updateById(
+      req.params.userId,
+      new User(req.body),
+      (err, data) => {
+        if (err) {
+          if (err.kind === "not_found") {
+            res.status(404).send({
+              message: `Not found User with userId ${req.params.userId}.`
+            });
+          } else {
+            res.status(500).send({
+              message: "Error updating User with userId " + req.params.userId
+            });
+          }
+        } else res.send(data);
+      }
+    );
   }
-
-  console.log(req.body);
-
-  User.updateById(
-    req.params.userId,
-    new User(req.body),
-    (err, data) => {
-      if (err) {
-        if (err.kind === "not_found") {
-          res.status(404).send({
-            message: `Not found User with userId ${req.params.userId}.`
-          });
-        } else {
-          res.status(500).send({
-            message: "Error updating User with userId " + req.params.userId
-          });
-        }
-      } else res.send(data);
-    }
-  );
 };
 
 // Delete a User with the specified userId in the request
