@@ -21,15 +21,31 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
-    "/createUser": {
+    "/api/users/getAll": {
+      "get": {
+          "tags": [
+            "Users"
+          ],
+          "summary": "Get all users in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Users"
+              }
+            }
+          }
+        }
+    },
+    "/api/users/addUser": {
       "post": {
         "tags": [
           "Users"
         ],
-        "description": "Create new user in system",
+        "description": "Add new user in system",
         "parameters": [
           {
-            "name": "Create User",
+            "name": "Add User",
             "in": "body",
             "description": "User that we want to create",
             "schema": {
@@ -50,26 +66,10 @@
         }
       } 
     },
-    "/users": {
-      "get": {
-          "tags": [
-            "Users"
-          ],
-          "summary": "Get all users in system",
-          "responses": {
-            "200": {
-              "description": "OK",
-              "schema": {
-                "$ref": "#/definitions/Users"
-              }
-            }
-          }
-        }
-    },
-    "/user/{id}": {
+    "/api/users/{userId}": {
       "parameters": [
         {
-          "name": "id",
+          "name": "userId",
           "in": "path",
           "required": true,
           "description": "ID of user that we want to find",
@@ -121,7 +121,7 @@
       "required": [
         "surname",
         "lastname",
-        "pmkey"
+        "pmKey"
       ],
       "properties": {
         "userId": {
@@ -134,21 +134,21 @@
         "lastname": {
           "type": "string"              
         },
-        "phone_number": {
+        "phoneNumber": {
           "type": "string"              
-        } ,
+        },
         "email": {
           "type": "string"              
         },
-        "rank_num": {
+        "rankNum": {
           "type": "string"              
         },
-        "pmkey": {
+        "pmKey": {
           "type": "string"              
         },
         "title": {
           "type": "string"              
-        }    ,
+        },
         "token": {
           "type": "string"              
         }

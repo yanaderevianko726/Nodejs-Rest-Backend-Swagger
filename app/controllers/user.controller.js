@@ -12,30 +12,42 @@ exports.create = (req, res) => {
   // Create a User
   const user = new User({
     title: req.body.title,
-    description: req.body.description,
-    published: req.body.published || false
+    surname: req.body.surname,
+    lastname: req.body.lastname,
+    phoneNumber: req.body.phoneNumber,
+    email: req.body.email,
+    rankNum: req.body.rankNum,
+    pmKey: req.body.pmKey,
   });
 
   // Save User in the database
   User.create(user, (err, data) => {
     if (err)
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while creating the User."
+        message: err.message || "Some error occurred while creating the User."
+      });
+    else res.send(data);
+  });
+};
+
+// find all Users
+exports.findAll = (req, res) => {
+  User.getAll((err, data) => {
+    if (err)
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving users."
       });
     else res.send(data);
   });
 };
 
 // Retrieve all Users from the database (with condition).
-exports.findAll = (req, res) => {
+exports.findAllWithTitle = (req, res) => {
   const title = req.query.title;
-
-  User.getAll(title, (err, data) => {
+  User.getAllWithTitle(title, (err, data) => {
     if (err)
       res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving users."
+        message: err.message || "Some error occurred while retrieving users."
       });
     else res.send(data);
   });
@@ -55,18 +67,6 @@ exports.findOne = (req, res) => {
         });
       }
     } else res.send(data);
-  });
-};
-
-// find all published Users
-exports.findAllPublished = (req, res) => {
-  User.getAllPublished((err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while retrieving users."
-      });
-    else res.send(data);
   });
 };
 

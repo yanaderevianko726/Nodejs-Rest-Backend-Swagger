@@ -1,23 +1,62 @@
 const sql = require("./db.js");
 const tb_name = 'users';
 
-// constructor
+// Constructor
 const User = function(user) {
   this.title = user.title;
-  this.description = user.description;
-  this.published = user.published;
+  this.surname = user.surname;
+  this.lastname = user.lastname;
+  this.phoneNumber = user.phoneNumber;
+  this.email = user.email;
+  this.rankNum = user.rankNum;
+  this.pmKey = user.pmKey;
+  this.token = user.token;
+  this.other = user.other;
 };
 
-User.create = (newUser, result) => {
-  sql.query("INSERT INTO " + tb_name + " SET ?", newUser, (err, res) => {
+User.create = (user, result) => {
+  let stmt = "INSERT INTO " + tb_name + "(title,surname,lastname,phoneNumber,email,rankNum,pmKey) VALUES(?,?,?,?,?,?,?)";
+  let todo = [user.title, user.surname, user.lastname, user.phoneNumber, user.email, user.rankNum, user.pmKey];
+  sql.query(stmt, todo, (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
 
-    console.log("created user: ", { userId: res.insertId, ...newUser });
-    result(null, { userId: res.insertId, ...newUser });
+    console.log("created user: ", { userId: res.insertId, ...user });
+    result(null, { userId: res.insertId, ...user });
+  });
+};
+
+User.getAll = result => {
+  sql.query("SELECT * FROM " + tb_name, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("users: ", res);
+    result(null, res);
+  });
+};
+
+User.getAllWithTitle = (title, result) => {
+  let query = "SELECT * FROM " + tb_name;
+  if (title) {
+    query += ` WHERE title LIKE '%${title}%'`;
+  }
+
+  sql.query(query, (err, res) => {
+    if (err) {
+      console.log("error: ", err);
+      result(null, err);
+      return;
+    }
+
+    console.log("users: ", res);
+    result(null, res);
   });
 };
 
@@ -40,42 +79,10 @@ User.findById = (userId, result) => {
   });
 };
 
-User.getAll = (title, result) => {
-  let query = "SELECT * FROM " + tb_name;
-
-  if (title) {
-    query += ` WHERE title LIKE '%${title}%'`;
-  }
-
-  sql.query(query, (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-
-    console.log("users: ", res);
-    result(null, res);
-  });
-};
-
-User.getAllPublished = result => {
-  sql.query("SELECT * FROM " + tb_name + " WHERE published=true", (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(null, err);
-      return;
-    }
-
-    console.log("users: ", res);
-    result(null, res);
-  });
-};
-
 User.updateById = (userId, user, result) => {
   sql.query(
-    "UPDATE " + tb_name + " SET title = ?, description = ?, published = ? WHERE userId = ?",
-    [user.title, user.description, user.published, userId],
+    "UPDATE " + tb_name + " SET title = ?, surname = ?, lastname = ?, phoneNumber = ?, email = ?, rankNum = ?, pmKey = ? WHERE userId = ?",
+    [user.title, user.surname, user.lastname, user.phoneNumber, user.email, user.rankNum, user.pmKey, userId],
     (err, res) => {
       if (err) {
         console.log("error: ", err);
@@ -84,7 +91,6 @@ User.updateById = (userId, user, result) => {
       }
 
       if (res.affectedRows == 0) {
-        // not found User with the id
         result({ kind: "not_found" }, null);
         return;
       }
@@ -104,7 +110,6 @@ User.remove = (userId, result) => {
     }
 
     if (res.affectedRows == 0) {
-      // not found User with the userId
       result({ kind: "not_found" }, null);
       return;
     }
