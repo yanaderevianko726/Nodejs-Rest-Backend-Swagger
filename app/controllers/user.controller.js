@@ -129,15 +129,3 @@ exports.delete = (req, res) => {
     } else res.send({ message: `User was deleted successfully!` });
   });
 };
-
-// Delete all Users from the database.
-exports.deleteAll = (req, res) => {
-  User.removeAll((err, data) => {
-    if (err)
-      res.status(500).send({
-        message:
-          err.message || "Some error occurred while removing all users."
-      });
-    else res.send({ message: `All Users were deleted successfully!` });
-  });
-};
