@@ -2,8 +2,8 @@
   "swagger": "2.0",
   "info": {
     "version": "1.0.0", 
-    "title": "My User Project CRUD",
-    "description": "My User Project Application API",
+    "title": "CheckIn API",
+    "description": "Defence Application API",
     "license": {
       "name": "MIT",
       "url": "https://opensource.org/licenses/MIT"
@@ -21,7 +21,7 @@
   "consumes": ["application/json"],
   "produces": ["application/json"],
   "paths": {
-    "/addUser": {
+    "/createUser": {
       "post": {
         "tags": [
           "Users"
@@ -29,7 +29,7 @@
         "description": "Create new user in system",
         "parameters": [
           {
-            "name": "user",
+            "name": "Create User",
             "in": "body",
             "description": "User that we want to create",
             "schema": {
@@ -119,81 +119,70 @@
   "definitions": {
     "User": {
       "required": [
-        "name",
-        "_id",
-        "companies"
+        "surname",
+        "lastname",
+        "pmkey"
       ],
       "properties": {
-        "_id": {
+        "userId": {
           "type": "integer",
           "uniqueItems": true
         },
-        "isPublic": {
-          "type": "boolean"
-        },
-        "name": {
+        "surname": {
           "type": "string"
         },
-        "books": {
-          "type": "array",
-          "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "amount": {
-                  "type": "number"
-                }
-              }
-          }
-              
+        "lastname": {
+          "type": "string"              
         },
-        "companies": {
-          "type": "array",
-          "items": {
-              "type": "string"      
-          }
-              
+        "phone_number": {
+          "type": "string"              
+        } ,
+        "email": {
+          "type": "string"              
+        },
+        "rank_num": {
+          "type": "string"              
+        },
+        "pmkey": {
+          "type": "string"              
+        },
+        "title": {
+          "type": "string"              
+        }    ,
+        "token": {
+          "type": "string"              
         }
-       
       }
     },
     "updateUser": {
       "required": [
-        "name",
-        "companies"
+        "userId"
       ],
       "properties": {
-        "isPublic": {
-          "type": "boolean"
-        },
-        "name": {
+        "surname": {
           "type": "string"
         },
-        "books": {
-          "type": "array",
-          "items": {
-              "type": "object",
-              "properties": {
-                "name": {
-                  "type": "string"
-                },
-                "amount": {
-                  "type": "number"
-                }
-              }
-          }
-              
+        "lastname": {
+          "type": "string"              
         },
-        "companies": {
-          "type": "array",
-          "items": {
-              "type": "string"      
-          }
-              
-        }
-       
+        "phone_number": {
+          "type": "string"              
+        } ,
+        "email": {
+          "type": "string"              
+        },
+        "rank_num": {
+          "type": "string"              
+        },
+        "pmkey": {
+          "type": "string"              
+        },
+        "title": {
+          "type": "string"              
+        }    ,
+        "token": {
+          "type": "string"              
+        }  
       }
     },
     "Users": {
