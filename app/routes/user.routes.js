@@ -16,7 +16,7 @@ module.exports = app => {
   router.get("/:userId", userController.findOne);
 
   // Retrieve all published User
-  router.get("/confirm/:pmKey/:surname", userController.findByPmKeyAndSurname);
+  router.get("/confirmKey/:pmKey/:surname", userController.findByPmKeyAndSurname);
 
   // Update a User with userId
   router.put("/:userId", userController.update);

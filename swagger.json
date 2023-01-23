@@ -37,7 +37,7 @@
           }
         }
     },
-    "/api/users/confirm/{pmKey}/{surname}": {
+    "/api/users/confirmKey/{pmKey}/{surname}": {
       "get": {
         "parameters": [          
           {
