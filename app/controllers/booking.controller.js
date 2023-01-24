@@ -9,7 +9,7 @@ exports.create = (req, res) => {
   }
 
   // Create a Booking
-  const Booking = new Booking({
+  const booking = new Booking({
     userId: req.body.userId,
     guestName: req.body.guestName,
     guests: req.body.guests,

@@ -17,7 +17,7 @@ const Booking = function(booking) {
 
 Booking.create = (booking, result) => {
   let stmt = "INSERT INTO " + tb_name + "(userId,guestName,guests,roomKey,roomNum,roomType,bookingType) VALUES(?,?,?,?,?,?,?)";
-  let todo = [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, user.bookingType];
+  let todo = [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType];
   sql.query(stmt, todo, (err, res) => {
     if (err) {
       console.log("error: ", err);
