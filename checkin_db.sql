@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 24, 2023 at 01:12 AM
+-- Generation Time: Jan 24, 2023 at 08:56 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -40,6 +40,15 @@ CREATE TABLE `bookings` (
   `createdAt` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `bookings`
+--
+
+INSERT INTO `bookings` (`bookingId`, `userId`, `guestName`, `qrCode`, `guests`, `roomKey`, `roomNum`, `roomType`, `bookingType`, `createdAt`) VALUES
+(1, 4, 'Yana Derevianko', '', 0, '2LT', '123', 'EMOS-3', '1', ''),
+(2, 5, 'Yana Derevianko', '', 5, '2LT', '123', 'EMOS-3', '12', ''),
+(3, 5, 'Yana Derevianko', '', 5, '2LT', '123', 'EMOS-3', '12', '');
+
 -- --------------------------------------------------------
 
 --
@@ -58,6 +67,14 @@ CREATE TABLE `users` (
   `token` text NOT NULL DEFAULT '',
   `other` text NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`userId`, `surname`, `lastname`, `phoneNumber`, `email`, `rankNum`, `pmKey`, `title`, `token`, `other`) VALUES
+(4, 'Yana', 'Derevianko', '+380501552037', 'derevianko.yana21@gmail.com', '3LT', '12345', 'Ms.', '', ''),
+(5, 'Yana', 'Derevianko', '+380501552037', 'derevianko.yana21@gmail.com', '2LT', '123456', 'Ms.', '', '');
 
 --
 -- Indexes for dumped tables
@@ -84,13 +101,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `bookingId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `bookingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `userId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
