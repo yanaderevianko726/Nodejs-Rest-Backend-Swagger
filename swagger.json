@@ -213,6 +213,195 @@
           }
         }
       }
+    },
+    "/api/bookings/getAll": {
+      "get": {
+          "tags": [
+            "Bookings"
+          ],
+          "summary": "Get all bookings in system",
+          "responses": {
+            "200": {
+              "description": "OK",
+              "schema": {
+                "$ref": "#/definitions/Bookings"
+              }
+            }
+          }
+        }
+    },
+    "/api/bookings/getBooking/{bookingId}": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "description": "Get Booking with bookingId in system",
+        "parameters": [          
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "description": "BookingId for a booking",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/Booking"
+            }
+          }
+        }
+      }
+    },
+    "/api/bookings/updateBooking/{bookingId}": {
+      "post": {
+        "tags": [
+          "Bookings"
+        ],
+        "description": "Confirm booking in system",
+        "parameters": [
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "description": "Booking Id",
+            "type": "integer"
+          },
+          {
+            "name": "Update Booking",
+            "in": "body",
+            "description": "Booking that we want to update",
+            "schema": {
+              "properties": {
+                "userId": {
+                  "type": "integer",
+                  "uniqueItems": true
+                },
+                "guestName": {
+                  "type": "string"              
+                },
+                "qrCode": {
+                  "type": "string"              
+                },
+                "guests": {
+                  "type": "integer"              
+                },
+                "roomKey": {
+                  "type": "string"              
+                },
+                "roomNum": {
+                  "type": "string"              
+                },
+                "roomType": {
+                  "type": "string"              
+                },
+                "bookingType": {
+                  "type": "string"              
+                },
+                "createdAt": {
+                  "type": "string"              
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New Booking is created",
+            "schema": {
+              "$ref": "#/definitions/Booking"              
+            }
+          }
+        }
+      } 
+    },
+    "/api/bookings/addBooking": {
+      "post": {
+        "tags": [
+          "Bookings"
+        ],
+        "description": "Add new booking in system",
+        "parameters": [
+          {
+            "name": "Add User",
+            "in": "body",
+            "description": "Booking that we want to create",
+            "schema": {
+              "properties": {
+                "userId": {
+                  "type": "integer",
+                  "uniqueItems": true
+                },
+                "guestName": {
+                  "type": "string"              
+                },
+                "qrCode": {
+                  "type": "string"              
+                },
+                "guests": {
+                  "type": "integer"              
+                },
+                "roomKey": {
+                  "type": "string"              
+                },
+                "roomNum": {
+                  "type": "string"              
+                },
+                "roomType": {
+                  "type": "string"              
+                },
+                "bookingType": {
+                  "type": "string"              
+                },
+                "createdAt": {
+                  "type": "string"              
+                }
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New booking is created",
+            "schema": {
+              "$ref": "#/definitions/Booking"
+            }
+          }
+        }
+      } 
+    },
+    "/api/bookings/deleteBooking/{bookingId}": {
+      "get": {
+        "tags": [
+          "Bookings"
+        ],
+        "description": "Remove booking with bookingId in system",
+        "parameters": [          
+          {
+            "name": "bookingId",
+            "in": "path",
+            "required": true,
+            "description": "BookingId for a booking",
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "message": "Successfully removed booking."
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -256,6 +445,49 @@
     "Users": {
       "type": "array",
       "$ref": "#/definitions/User"
-    }   
+    },
+    "Booking": {
+      "required": [
+        "bookingId",
+        "userId"
+      ],
+      "properties": {
+        "bookingId": {
+          "type": "integer",
+          "uniqueItems": true
+        },
+        "userId": {
+          "type": "integer"
+        },
+        "guestName": {
+          "type": "string"              
+        },
+        "qrCode": {
+          "type": "string"              
+        },
+        "guests": {
+          "type": "integer"              
+        },
+        "roomKey": {
+          "type": "string"              
+        },
+        "roomNum": {
+          "type": "string"              
+        },
+        "roomType": {
+          "type": "string"              
+        },
+        "bookingType": {
+          "type": "string"              
+        },
+        "createdAt": {
+          "type": "string"              
+        }
+      }
+    },
+    "Bookings": {
+      "type": "array",
+      "$ref": "#/definitions/Booking"
+    } 
   }
 }
