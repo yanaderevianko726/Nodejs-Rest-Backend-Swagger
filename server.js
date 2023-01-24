@@ -8,8 +8,9 @@ const swaggerUi = require('swagger-ui-express'),
 swaggerDocument = require('./swagger.json');
 
 var corsOptions = {
-  origin: "http://localhost:8000"
+  origin: "http://localhost:3000"
 };
+// change this port when have error with "Access to XMLHttpRequest blocking error"
 
 app.use(cors(corsOptions));
 // parse requests of content-type - application/json
