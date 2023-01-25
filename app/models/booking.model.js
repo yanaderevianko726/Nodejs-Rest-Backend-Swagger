@@ -12,12 +12,14 @@ const Booking = function(booking) {
   this.roomNum = booking.roomNum;
   this.roomType = booking.roomType;
   this.bookingType = booking.bookingType;
+  this.dateFrom = booking.dateFrom;
+  this.dateTo = booking.dateTo;
   this.createdAt = booking.createdAt;
 };
 
 Booking.create = (booking, result) => {
-  let stmt = "INSERT INTO " + tb_name + "(userId,guestName,guests,roomKey,roomNum,roomType,bookingType,createdAt) VALUES(?,?,?,?,?,?,?,?)";
-  let todo = [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.createdAt];
+  let stmt = "INSERT INTO " + tb_name + "(userId,guestName,guests,roomKey,roomNum,roomType,bookingType,dateFrom,dateTo,createdAt) VALUES(?,?,?,?,?,?,?,?,?,?)";
+  let todo = [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt];
   sql.query(stmt, todo, (err, res) => {
     if (err) {
       console.log("error: ", err);
@@ -78,8 +80,8 @@ Booking.getAllWithUserId = (userId, result) => {
 
 Booking.updateByBookingId = (bookingId, booking, result) => {
   sql.query(
-    "UPDATE " + tb_name + " SET userId = ?, guestName = ?, qrCode = ?, guests = ?, roomKey = ?, roomNum = ?, roomType = ?, bookingType = ?, createdAt = ? WHERE bookingId = ?",
-    [booking.userId, booking.guestName, booking.qrCode, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.createdAt, bookingId],
+    "UPDATE " + tb_name + " SET userId = ?, guestName = ?, qrCode = ?, guests = ?, roomKey = ?, roomNum = ?, roomType = ?, bookingType = ?, dateFrom = ?, dateTo = ?, createdAt = ? WHERE bookingId = ?",
+    [booking.userId, booking.guestName, booking.qrCode, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt, bookingId],
     (err, res) => {
       if (err) {
         console.log("error: ", err);

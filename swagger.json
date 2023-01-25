@@ -300,6 +300,12 @@
                 "bookingType": {
                   "type": "string"              
                 },
+                "dateFrom": {
+                  "type": "string"              
+                },
+                "dateTo": {
+                  "type": "string"              
+                },
                 "createdAt": {
                   "type": "string"              
                 }
@@ -356,6 +362,12 @@
                   "type": "string"              
                 },
                 "bookingType": {
+                  "type": "string"              
+                },
+                "dateFrom": {
+                  "type": "string"              
+                },
+                "dateTo": {
                   "type": "string"              
                 },
                 "createdAt": {
