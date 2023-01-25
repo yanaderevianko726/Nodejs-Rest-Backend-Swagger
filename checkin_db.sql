@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jan 24, 2023 at 08:56 AM
+-- Generation Time: Jan 25, 2023 at 11:16 AM
 -- Server version: 10.4.24-MariaDB
 -- PHP Version: 8.1.6
 
@@ -37,6 +37,8 @@ CREATE TABLE `bookings` (
   `roomNum` text NOT NULL,
   `roomType` text NOT NULL,
   `bookingType` text NOT NULL,
+  `dateFrom` text NOT NULL DEFAULT '',
+  `dateTo` text NOT NULL DEFAULT '',
   `createdAt` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -44,10 +46,8 @@ CREATE TABLE `bookings` (
 -- Dumping data for table `bookings`
 --
 
-INSERT INTO `bookings` (`bookingId`, `userId`, `guestName`, `qrCode`, `guests`, `roomKey`, `roomNum`, `roomType`, `bookingType`, `createdAt`) VALUES
-(1, 4, 'Yana Derevianko', '', 0, '2LT', '123', 'EMOS-3', '1', ''),
-(2, 5, 'Yana Derevianko', '', 5, '2LT', '123', 'EMOS-3', '12', ''),
-(3, 5, 'Yana Derevianko', '', 5, '2LT', '123', 'EMOS-3', '12', '');
+INSERT INTO `bookings` (`bookingId`, `userId`, `guestName`, `qrCode`, `guests`, `roomKey`, `roomNum`, `roomType`, `bookingType`, `dateFrom`, `dateTo`, `createdAt`) VALUES
+(5, 4, 'Yana Derevianko', '', 5, '123', 'P027-1-3', '13 night standard non smoking room', 'EMOS-3', '', '', 'Wed Jan 25th 2023');
 
 -- --------------------------------------------------------
 
@@ -73,7 +73,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`userId`, `surname`, `lastname`, `phoneNumber`, `email`, `rankNum`, `pmKey`, `title`, `token`, `other`) VALUES
-(4, 'Yana', 'Derevianko', '+380501552037', 'derevianko.yana21@gmail.com', '3LT', '12345', 'Ms.', '', ''),
+(4, 'Yana', 'Derevianko', '+380501552037', 'derevianko.yana21@gmail.com', '1LT', '12345', 'Ms.', '', ''),
 (5, 'Yana', 'Derevianko', '+380501552037', 'derevianko.yana21@gmail.com', '2LT', '123456', 'Ms.', '', '');
 
 --
@@ -101,7 +101,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `bookings`
 --
 ALTER TABLE `bookings`
-  MODIFY `bookingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `bookingId` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `users`
