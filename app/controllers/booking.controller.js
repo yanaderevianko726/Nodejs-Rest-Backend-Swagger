@@ -17,6 +17,8 @@ exports.create = (req, res) => {
     roomNum: req.body.roomNum,
     roomType: req.body.roomType,
     bookingType: req.body.bookingType,
+    dateFrom: req.body.dateFrom,
+    dateTo: req.body.dateTo,
     createdAt: req.body.createdAt
   });  
   Booking.create(booking, (err, data) => {
