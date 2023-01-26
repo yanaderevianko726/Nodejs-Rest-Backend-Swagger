@@ -20,17 +20,17 @@ const Booking = function(booking) {
 Booking.create = (booking, result) => {
 
   sql.query("SELECT * FROM " + tb_name + " WHERE userId = '" + booking.userId + "' AND createdAt = '" + booking.createdAt +  "'", 
-    (err, res) => {
-    if (err) {
-      console.log("error: ", err);
-      result(err, null);
+    (err1, res1) => {
+    if (err1) {
+      console.log("error: ", err1);
+      result(err1, null);
       return;
     }
 
-    if (res.length) {
+    if (res1.length) {
       sql.query(
-        "UPDATE " + tb_name + " SET userId = ?, guestName = ?, guests = ?, roomKey = ?, roomNum = ?, roomType = ?, bookingType = ?, dateFrom = ?, dateTo = ?, createdAt = ? WHERE bookingId = ?",
-        [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt, res[0].bookingId],
+        "UPDATE " + tb_name + " SET userId = ?, guestName = ?, guests = ?, roomKey = ?, roomNum = ?, roomType = ?, bookingType = ?, dateFrom = ?, dateTo = ?, createdAt = ? WHERE userId = '" + booking.userId + "' AND createdAt = '" + booking.createdAt +  "'",
+        [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt],
         (err, res) => {
           if (err) {
             console.log("error: ", err);
@@ -38,26 +38,25 @@ Booking.create = (booking, result) => {
             return;
           }
 
-          console.log("updated booking: ", { bookingId: res[0].bookingId, ...booking });
-          result(null, { bookingId: res[0].bookingId, ...booking });
+          result(null, { bookingId: res1[0].bookingId, ...booking });
           return;
         }
       );
-    }
+    }else{
+      let stmt = "INSERT INTO " + tb_name + "(userId,guestName,guests,roomKey,roomNum,roomType,bookingType,dateFrom,dateTo,createdAt) VALUES(?,?,?,?,?,?,?,?,?,?)";
+      let todo = [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt];
+      sql.query(stmt, todo, (err, res) => {
+        if (err) {
+          console.log("error: ", err);
+          result(err, null);
+          return;
+        }
 
-    let stmt = "INSERT INTO " + tb_name + "(userId,guestName,guests,roomKey,roomNum,roomType,bookingType,dateFrom,dateTo,createdAt) VALUES(?,?,?,?,?,?,?,?,?,?)";
-    let todo = [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt];
-    sql.query(stmt, todo, (err, res) => {
-      if (err) {
-        console.log("error: ", err);
-        result(err, null);
+        console.log("created booking: ", { bookingId: res.insertId, ...booking });
+        result(null, { bookingId: res.insertId, ...booking });
         return;
-      }
-
-      console.log("created booking: ", { bookingId: res.insertId, ...booking });
-      result(null, { bookingId: res.insertId, ...booking });
-      return;
-    });
+      });      
+    }
   });  
 };
 
