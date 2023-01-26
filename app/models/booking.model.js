@@ -18,18 +18,47 @@ const Booking = function(booking) {
 };
 
 Booking.create = (booking, result) => {
-  let stmt = "INSERT INTO " + tb_name + "(userId,guestName,guests,roomKey,roomNum,roomType,bookingType,dateFrom,dateTo,createdAt) VALUES(?,?,?,?,?,?,?,?,?,?)";
-  let todo = [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt];
-  sql.query(stmt, todo, (err, res) => {
+
+  sql.query("SELECT * FROM " + tb_name + " WHERE userId = '" + booking.userId + "' AND createdAt = '" + booking.createdAt +  "'", 
+    (err, res) => {
     if (err) {
       console.log("error: ", err);
       result(err, null);
       return;
     }
 
-    console.log("created booking: ", { bookingId: res.insertId, ...booking });
-    result(null, { bookingId: res.insertId, ...booking });
-  });
+    if (res.length) {
+      sql.query(
+        "UPDATE " + tb_name + " SET userId = ?, guestName = ?, guests = ?, roomKey = ?, roomNum = ?, roomType = ?, bookingType = ?, dateFrom = ?, dateTo = ?, createdAt = ? WHERE bookingId = ?",
+        [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt, res[0].bookingId],
+        (err, res) => {
+          if (err) {
+            console.log("error: ", err);
+            result(null, err);
+            return;
+          }
+
+          console.log("updated booking: ", { bookingId: res[0].bookingId, ...booking });
+          result(null, { bookingId: res[0].bookingId, ...booking });
+          return;
+        }
+      );
+    }
+
+    let stmt = "INSERT INTO " + tb_name + "(userId,guestName,guests,roomKey,roomNum,roomType,bookingType,dateFrom,dateTo,createdAt) VALUES(?,?,?,?,?,?,?,?,?,?)";
+    let todo = [booking.userId, booking.guestName, booking.guests, booking.roomKey, booking.roomNum, booking.roomType, booking.bookingType, booking.dateFrom, booking.dateTo, booking.createdAt];
+    sql.query(stmt, todo, (err, res) => {
+      if (err) {
+        console.log("error: ", err);
+        result(err, null);
+        return;
+      }
+
+      console.log("created booking: ", { bookingId: res.insertId, ...booking });
+      result(null, { bookingId: res.insertId, ...booking });
+      return;
+    });
+  });  
 };
 
 Booking.getAll = result => {
